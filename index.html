@@ -1,108 +1,64 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>MicroBurstMedia | AI Marketing Automation</title>
-    <style>
-        :root {
-            --bg-dark: #0f172a;
-            --bg-card: #1e293b;
-            --primary: #3b82f6;
-            --accent: #8b5cf6;
-            --text-main: #f8fafc;
-            --text-muted: #94a3b8;
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>MicroBurstMedia | AI Marketing Automation</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            slate: {
+              900: '#0f172a',
+              800: '#1e293b',
+              700: '#334155',
+              600: '#475569',
+              400: '#94a3b8',
+              200: '#e2e8f0',
+              50: '#f8fafc',
+            },
+            blue: {
+              500: '#3b82f6',
+            },
+            violet: {
+              500: '#8b5cf6',
+            }
+          },
+          fontFamily: {
+            sans: ['Inter', 'sans-serif'],
+          },
+          animation: {
+            'fade-in': 'fadeIn 0.3s ease-out',
+            'zoom-in': 'zoomIn 0.3s ease-out',
+          },
+          keyframes: {
+            fadeIn: {
+              '0%': { opacity: '0' },
+              '100%': { opacity: '1' },
+            },
+            zoomIn: {
+              '0%': { opacity: '0', transform: 'scale(0.95)' },
+              '100%': { opacity: '1', transform: 'scale(1)' },
+            }
+          }
         }
-
-        * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Inter', sans-serif; }
-        body { background-color: var(--bg-dark); color: var(--text-main); line-height: 1.6; overflow-x: hidden; }
-
-        /* --- MANEUVERABILITY (Mobile-First) --- */
-        .container { max-width: 1200px; margin: 0 auto; padding: 0 20px; }
-        header { position: sticky; top: 0; background: rgba(15, 23, 42, 0.9); backdrop-filter: blur(10px); z-index: 100; border-bottom: 1px solid rgba(255,255,255,0.1); padding: 15px 0; }
-        nav { display: flex; justify-content: space-between; align-items: center; }
-        .logo { font-size: 1.5rem; font-weight: 800; background: linear-gradient(90deg, var(--primary), var(--accent)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
-
-        /* --- UI COMPONENTS --- */
-        .btn { display: inline-block; padding: 16px 32px; border-radius: 50px; font-weight: 700; transition: 0.3s; cursor: pointer; border: none; text-align: center; text-decoration: none; min-height: 48px; /* Touch Target */ }
-        .btn-primary { background: linear-gradient(135deg, var(--primary), var(--accent)); color: white; box-shadow: 0 4px 15px rgba(59, 130, 246, 0.4); }
-        .btn-primary:hover { transform: scale(1.05); }
-        .btn-outline { border: 2px solid var(--text-muted); color: var(--text-muted); background: transparent; margin-top: 10px; }
-
-        /* --- SECTIONS --- */
-        .hero { padding: 100px 0 60px; text-align: center; background: radial-gradient(circle at center, rgba(59, 130, 246, 0.1), transparent); }
-        .hero h1 { font-size: 2.2rem; margin-bottom: 20px; }
-        .hero p { color: var(--text-muted); margin-bottom: 30px; font-size: 1.1rem; }
-        
-        .features { padding: 60px 0; }
-        .grid { display: grid; grid-template-columns: 1fr; gap: 20px; }
-
-        /* --- MODAL --- */
-        .modal-overlay { position: fixed; inset: 0; background: rgba(0,0,0,0.9); display: none; justify-content: center; align-items: center; z-index: 2000; padding: 20px; }
-        .modal-overlay.active { display: flex; }
-        .modal-card { background: var(--bg-card); padding: 30px; border-radius: 20px; text-align: center; max-width: 450px; border: 1px solid var(--primary); }
-
-        /* --- DESKTOP ADAPTATION --- */
-        @media (min-width: 768px) {
-            .hero h1 { font-size: 3.5rem; }
-            .grid { grid-template-columns: repeat(3, 1fr); }
-            .btn-outline { margin-top: 0; margin-left: 10px; }
-        }
-    </style>
+      }
+    }
+  </script>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap" rel="stylesheet">
+  <script type="importmap">
+  {
+    "imports": {
+      "react": "https://esm.sh/react@18.2.0",
+      "react-dom/client": "https://esm.sh/react-dom@18.2.0/client",
+      "lucide-react": "https://esm.sh/lucide-react@0.303.0"
+    }
+  }
+  </script>
 </head>
 <body>
-
-    <div id="popup" class="modal-overlay">
-        <div class="modal-card">
-            <h2>Disclaimer</h2>
-            <p style="margin: 15px 0; color: var(--text-muted);">This landing page provides an AI automation blueprint for educational and professional marketing use.</p>
-            <button class="btn btn-primary" onclick="closePopup()">I Accept & Proceed</button>
-        </div>
-    </div>
-
-    <header>
-        <div class="container">
-            <nav>
-                <div class="logo">MicroBurstMedia</div>
-                <a href="https://gamma.app/docs/Streamline-Your-Digital-Marketing-with-AI-Automation-MicroBurstMe-i7smhou68gfwfou" target="_blank" class="btn btn-primary" style="padding: 10px 20px; font-size: 0.8rem;">Blueprint</a>
-            </nav>
-        </div>
-    </header>
-
-    <section class="hero">
-        <div class="container">
-            <h1>Streamline Your Digital Marketing with AI Automation</h1>
-            <p>Deploy high-efficiency workflows that scale your business while you sleep.</p>
-            <a href="https://gamma.app/docs/Streamline-Your-Digital-Marketing-with-AI-Automation-MicroBurstMe-i7smhou68gfwfou" target="_blank" class="btn btn-primary">
-                View the Automation Blueprint
-            </a>
-        </div>
-    </section>
-
-    <section class="features">
-        <div class="container">
-            <div class="grid">
-                <div class="card" style="background: var(--bg-card); padding: 25px; border-radius: 15px;">
-                    <h3 style="color: var(--primary)">Fast Setup</h3>
-                    <p style="color: var(--text-muted)">Get your AI systems running in hours, not weeks.</p>
-                </div>
-                <div class="card" style="background: var(--bg-card); padding: 25px; border-radius: 15px;">
-                    <h3 style="color: var(--primary)">24/7 Scale</h3>
-                    <p style="color: var(--text-muted)">Your marketing works around the clock without extra overhead.</p>
-                </div>
-                <div class="card" style="background: var(--bg-card); padding: 25px; border-radius: 15px;">
-                    <h3 style="color: var(--primary)">Mobile Ready</h3>
-                    <p style="color: var(--text-muted)">Fully maneuverable on all devices and screen sizes.</p>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <script>
-        window.onload = () => {
-            setTimeout(() => { document.getElementById('popup').classList.add('active'); }, 500);
-        };
-        function closePopup() { document.getElementById('popup').classList.remove('active'); }
-    </script>
+  <div id="root"></div>
 </body>
 </html>
