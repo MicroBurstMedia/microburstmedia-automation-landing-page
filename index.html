@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -237,70 +238,27 @@
     </section>
 
     <section class="contact-section" id="contactForm">
-    <div class="container" style="text-align: center;">
-        <h2 style="margin-bottom: 30px;">Request More Information</h2>
-        
-        <form id="googleSheetForm" class="glass-form">
-            <div class="form-group">
-                <label>Full Name</label>
-                <input type="text" name="name" required placeholder="John Doe">
-            </div>
-            <div class="form-group">
-                <label>Email Address</label>
-                <input type="email" name="email" required placeholder="john@example.com">
-            </div>
-            <div class="form-group">
-                <label>How can AI help your business?</label>
-                <textarea name="message" rows="4" required placeholder="Tell us about your current workflow..."></textarea>
-            </div>
-            <button type="submit" id="submitBtn" class="btn btn-primary" style="width: 100%;">Submit to Dashboard</button>
-            <p id="formStatus" style="margin-top: 15px; font-weight: 600; display: none;"></p>
-        </form>
-    </div>
-</section>
-
-<script>
-    // 1. MODAL LOGIC
-    document.addEventListener('DOMContentLoaded', function() {
-        setTimeout(() => { document.getElementById('disclaimerModal').classList.add('active'); }, 500);
-    });
-    function closeModal() { document.getElementById('disclaimerModal').classList.remove('active'); }
-
-    // 2. FORM LOGIC (REPLACE THE URL BELOW WITH YOUR "EXEC" URL)
-    const scriptURL = 'https://script.google.com/macros/s/AKfycbxZex7qhdLwuOiqxHVHqQ1sefNPVgKKdOfb_QfWzWXCXU6RNcixqiutwxrdpIlSuZ3c/exec';
-    const form = document.getElementById('googleSheetForm');
-    const btn = document.getElementById('submitBtn');
-    const statusMsg = document.getElementById('formStatus');
-
-    form.addEventListener('submit', e => {
-        e.preventDefault();
-        
-        // UI Feedback
-        btn.disabled = true;
-        btn.innerText = "Processing...";
-        statusMsg.style.display = "block";
-        statusMsg.innerText = "AI delivering your message...";
-        statusMsg.style.color = "var(--text-muted)";
-
-        fetch(scriptURL, { method: 'POST', body: new FormData(form)})
-            .then(response => {
-                btn.innerText = "Sent Successfully";
-                btn.style.background = "var(--success)";
-                statusMsg.innerText = "Please check your inbox and spam folders for a response.";
-                statusMsg.style.color = "var(--success)";
-                form.reset();
-                
-                // Optional: Redirect to Gamma link after 2 seconds
-                // setTimeout(() => { window.location.href = "YOUR_GAMMA_LINK"; }, 2000);
-            })
-            .catch(error => {
-                btn.disabled = false;
-                btn.innerText = "Try Again";
-                statusMsg.innerText = "Connection error. Please check your script deployment.";
-                statusMsg.style.color = "#ef4444";
-            });
-    });
-</script>
+        <div class="container" style="text-align: center;">
+            <h2 style="margin-bottom: 30px;">Request More Information</h2>
+            
+            <form id="googleSheetForm" class="glass-form">
+                <div class="form-group">
+                    <label>Full Name</label>
+                    <input type="text" name="name" required placeholder="John Doe">
+                </div>
+                <div class="form-group">
+                    <label>Email Address</label>
+                    <input type="email" name="email" required placeholder="john@example.com">
+                </div>
+                <div class="form-group">
+                    <label>How can AI help your business?</label>
+                    <textarea name="message" rows="4" required placeholder="Tell us about your current workflow..."></textarea>
+                </div>
+                <button type="submit" id="submitBtn" class="btn btn-primary" style="width: 100%;">Submit to Dashboard</button>
+                <p id="formStatus" style="margin-top: 15px; font-weight: 600; display: none;"></p>
+            </form>
+        </div>
+    </section>
 
     <footer style="text-align: center; padding: 40px 0; border-top: 1px solid rgba(255,255,255,0.1); color: var(--text-muted); font-size: 0.9rem;">
         <div class="container">
@@ -309,50 +267,60 @@
     </footer>
 
     <script>
-        // Modal Logic
+        // 1. MODAL LOGIC
         document.addEventListener('DOMContentLoaded', function() {
-            setTimeout(() => { document.getElementById('disclaimerModal').classList.add('active'); }, 500);
+            const modal = document.getElementById('disclaimerModal');
+            if (modal) {
+                setTimeout(() => { modal.classList.add('active'); }, 500);
+            }
         });
-        function closeModal() { document.getElementById('disclaimerModal').classList.remove('active'); }
+        
+        function closeModal() { 
+            document.getElementById('disclaimerModal').classList.remove('active'); 
+        }
 
-        // Google Sheets Form Logic with Debugger
-        const scriptURL = 'https://script.google.com/macros/s/AKfycbzF9x_0BLUZ8DrvE32X47xAHn7CNH-t1eMlMfIgieUxJLzI5WYr8Dpzytb2FLp7vYCv/exec';
+        // 2. UNIFIED FORM LOGIC
+        const scriptURL = 'https://script.google.com/macros/s/AKfycbxua0awPLA7TPYZKdiD5d_PqamGDfN9SOZqJiNZrfkOPvdhVqWYrB7mK9KBrmIMuI_Z/exec';
         const form = document.getElementById('googleSheetForm');
         const btn = document.getElementById('submitBtn');
+        const statusMsg = document.getElementById('formStatus');
 
         form.addEventListener('submit', e => {
             e.preventDefault();
+            
+            // UI Feedback
             btn.disabled = true;
-            btn.innerText = "Sending Data...";
+            btn.innerText = "Processing...";
+            statusMsg.style.display = "block";
+            statusMsg.innerText = "AI delivering your message...";
+            statusMsg.style.color = "var(--text-muted)";
 
-            // Create payload
-            let requestBody = new FormData(form);
-
-            fetch(scriptURL, { method: 'POST', body: requestBody })
+            // Sending Data
+            fetch(scriptURL, { method: 'POST', body: new FormData(form)})
                 .then(response => {
-                    // Debug Alert: Show successful network connection
-                    alert("DEBUG INFO: Network connection successful. Data pushed to Google Script.");
-                    
-                    btn.innerText = "Success!";
+                    // Success State
+                    btn.innerText = "Sent Successfully";
                     btn.style.background = "var(--success)";
+                    statusMsg.innerText = "Success! Data logged to your Google Sheet.";
+                    statusMsg.style.color = "var(--success)";
                     form.reset();
                     
-                    // Reset button after 3 seconds
+                    // Reset button back to default after 3 seconds
                     setTimeout(() => {
                         btn.disabled = false;
                         btn.innerText = "Submit to Dashboard";
-                        btn.style.background = "linear-gradient(135deg, var(--primary), var(--accent))";
+                        btn.style.background = ""; // Resets to original CSS gradient
+                        statusMsg.style.display = "none";
                     }, 3000);
                 })
                 .catch(error => {
-                    // Debug Alert: Show exactly why it failed
-                    alert("DEBUG ERROR: Fetch failed. Details: " + error.message);
-                    
+                    // Error State
+                    console.error('Error!', error.message);
                     btn.disabled = false;
-                    btn.innerText = "Error. Try Again.";
-                    btn.style.background = "#ef4444"; // Red for error
+                    btn.innerText = "Try Again";
+                    statusMsg.innerText = "Connection error. Please verify your script deployment.";
+                    statusMsg.style.color = "#ef4444";
                 });
         });
     </script>
 </body>
-</html>
