@@ -1,39 +1,26 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <!-- ================= META ================= -->
     <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-    <title>MicroBurstMedia | AI Marketing Automation</title>
-    <meta name="description" content="Streamline your digital marketing with AI automation. Deploy scalable workflows that increase efficiency, speed, and ROI.">
-    <meta name="author" content="MicroBurstMedia">
-
-    <!-- Open Graph -->
-    <meta property="og:title" content="MicroBurstMedia | AI Marketing Automation">
-    <meta property="og:description" content="Streamline your digital marketing with AI automation and scalable workflows.">
-    <meta property="og:type" content="website">
-
-    <!-- Google Font -->
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap" rel="stylesheet">
-
-    <!-- ================= STYLES ================= -->
+    <title>MicroBurstMedia | AI Automation Blueprint</title>
     <style>
+        /* --- CSS VARIABLES & THEME --- */
         :root {
             --bg-dark: #0f172a;
             --bg-card: #1e293b;
-            --primary: #3b82f6;
-            --accent: #8b5cf6;
+            --primary: #3b82f6; 
+            --accent: #8b5cf6; 
             --text-main: #f8fafc;
             --text-muted: #94a3b8;
+            --success: #10b981;
         }
 
         * {
             box-sizing: border-box;
             margin: 0;
             padding: 0;
-            font-family: 'Inter', sans-serif;
+            font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
         }
 
         body {
@@ -43,17 +30,50 @@
             overflow-x: hidden;
         }
 
+        /* --- UTILITIES & MOBILE FIRST --- */
         .container {
             max-width: 1200px;
             margin: 0 auto;
             padding: 0 20px;
         }
 
-        /* ================= HEADER ================= */
+        .btn {
+            display: inline-block;
+            padding: 14px 28px;
+            min-height: 48px; /* Mobile touch target size */
+            border-radius: 50px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            transition: transform 0.2s, box-shadow 0.2s;
+            cursor: pointer;
+            border: none;
+            text-align: center;
+            text-decoration: none;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, var(--primary), var(--accent));
+            color: white;
+            box-shadow: 0 4px 15px rgba(59, 130, 246, 0.4);
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(139, 92, 246, 0.6);
+        }
+
+        .btn-outline {
+            border: 2px solid var(--text-muted);
+            background: transparent;
+            color: var(--text-muted);
+        }
+
+        /* --- HEADER --- */
         header {
             position: sticky;
             top: 0;
-            background: rgba(15, 23, 42, 0.9);
+            background: rgba(15, 23, 42, 0.95);
             backdrop-filter: blur(10px);
             z-index: 100;
             border-bottom: 1px solid rgba(255,255,255,0.1);
@@ -74,220 +94,221 @@
             -webkit-text-fill-color: transparent;
         }
 
-        /* ================= BUTTONS ================= */
-        .btn {
-            display: inline-block;
-            padding: 16px 32px;
-            border-radius: 50px;
-            font-weight: 700;
-            transition: 0.3s ease;
-            cursor: pointer;
-            border: none;
-            text-align: center;
-            text-decoration: none;
-            min-height: 48px;
-        }
-
-        .btn-primary {
-            background: linear-gradient(135deg, var(--primary), var(--accent));
-            color: white;
-            box-shadow: 0 4px 15px rgba(59, 130, 246, 0.4);
-        }
-
-        .btn-primary:hover {
-            transform: scale(1.05);
-        }
-
-        /* Smaller button for header */
-        .btn-sm {
-            padding: 10px 20px;
-            font-size: 0.85rem;
-            min-height: auto;
-        }
-
-        /* ================= HERO ================= */
+        /* --- HERO SECTION --- */
         .hero {
-            padding: 100px 0 60px;
+            padding: 80px 0;
             text-align: center;
-            background: radial-gradient(circle at center, rgba(59, 130, 246, 0.1), transparent);
+            min-height: 70vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            background: radial-gradient(circle at top, rgba(59, 130, 246, 0.15), transparent 70%);
         }
 
         .hero h1 {
-            font-size: 2.2rem;
+            font-size: 2.5rem;
+            line-height: 1.2;
             margin-bottom: 20px;
         }
 
         .hero p {
-            color: var(--text-muted);
-            margin-bottom: 30px;
             font-size: 1.1rem;
+            color: var(--text-muted);
+            max-width: 600px;
+            margin: 0 auto 40px auto;
         }
 
-        /* ================= FEATURES ================= */
-        .features {
-            padding: 60px 0;
-        }
-
+        /* --- FEATURES GRID --- */
+        .features { padding: 60px 0; }
         .grid {
             display: grid;
             grid-template-columns: 1fr;
             gap: 20px;
+            margin-top: 40px;
         }
-
         .card {
             background: var(--bg-card);
-            padding: 25px;
-            border-radius: 15px;
-            transition: 0.3s ease;
-        }
-
-        .card:hover {
-            transform: translateY(-5px);
-        }
-
-        .card h3 {
-            color: var(--primary);
-            margin-bottom: 10px;
-        }
-
-        .card p {
-            color: var(--text-muted);
-        }
-
-        /* ================= MODAL ================= */
-        .modal-overlay {
-            position: fixed;
-            inset: 0;
-            background: rgba(0,0,0,0.9);
-            display: none;
-            justify-content: center;
-            align-items: center;
-            z-index: 2000;
-            padding: 20px;
-        }
-
-        .modal-overlay.active {
-            display: flex;
-        }
-
-        .modal-card {
-            background: var(--bg-card);
             padding: 30px;
+            border-radius: 12px;
+            border: 1px solid rgba(255,255,255,0.05);
+        }
+
+        /* --- CONTACT FORM (GLASSMORPHISM) --- */
+        .contact-section {
+            padding: 60px 0 100px;
+        }
+        .glass-form {
+            background: rgba(30, 41, 59, 0.6);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            padding: 40px 30px;
             border-radius: 20px;
-            text-align: center;
-            max-width: 450px;
-            border: 1px solid var(--primary);
+            max-width: 600px;
+            margin: 0 auto;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+        }
+        .form-group { margin-bottom: 20px; text-align: left; }
+        .form-group label {
+            display: block; margin-bottom: 8px; font-size: 0.9rem; color: var(--text-muted);
+        }
+        .form-group input, .form-group textarea {
+            width: 100%;
+            padding: 14px;
+            border-radius: 10px;
+            border: 1px solid #334155;
+            background: #020617;
+            color: white;
+            font-size: 1rem;
+            min-height: 48px; /* Mobile touch target */
+        }
+        .form-group input:focus, .form-group textarea:focus {
+            outline: none;
+            border-color: var(--primary);
         }
 
-        .modal-card h2 {
-            margin-bottom: 15px;
+        /* --- MODAL (DISCLAIMER) --- */
+        .modal-overlay {
+            position: fixed; inset: 0; background: rgba(0, 0, 0, 0.85); display: flex; justify-content: center; align-items: center; z-index: 1000; opacity: 0; pointer-events: none; transition: opacity 0.3s ease;
+        }
+        .modal-overlay.active { opacity: 1; pointer-events: all; }
+        .modal-content {
+            background: var(--bg-card); padding: 30px; border-radius: 16px; max-width: 500px; width: 90%; text-align: center; border: 1px solid var(--accent);
         }
 
-        .modal-card p {
-            margin-bottom: 20px;
-            color: var(--text-muted);
-        }
-
-        /* ================= FOOTER ================= */
-        footer {
-            text-align: center;
-            padding: 30px 0;
-            color: var(--text-muted);
-            border-top: 1px solid rgba(255,255,255,0.1);
-        }
-
-        /* ================= DESKTOP ================= */
+        /* --- DESKTOP QUERIES --- */
         @media (min-width: 768px) {
-            .hero h1 {
-                font-size: 3.5rem;
-            }
-
-            .grid {
-                grid-template-columns: repeat(3, 1fr);
-            }
+            .hero h1 { font-size: 3.5rem; }
+            .grid { grid-template-columns: repeat(3, 1fr); }
         }
     </style>
 </head>
-
 <body>
 
-    <!-- ================= MODAL ================= -->
-    <div id="popup" class="modal-overlay">
-        <div class="modal-card">
-            <h2>Disclaimer</h2>
-            <p>This landing page provides an AI automation blueprint for educational and professional marketing use.</p>
-            <button class="btn btn-primary" onclick="closePopup()">I Accept & Proceed</button>
+    <div id="disclaimerModal" class="modal-overlay">
+        <div class="modal-content">
+            <h2 style="margin-bottom: 15px;">Welcome to MicroBurstMedia</h2>
+            <p style="color: var(--text-muted); margin-bottom: 25px;">
+                By proceeding, you agree to view our AI automation strategies.
+            </p>
+            <button class="btn btn-primary" onclick="closeModal()">Proceed to Blueprint</button>
         </div>
     </div>
 
-    <!-- ================= HEADER ================= -->
     <header>
         <div class="container">
             <nav>
                 <div class="logo">MicroBurstMedia</div>
-                <a href="https://gamma.app/docs/Streamline-Your-Digital-Marketing-with-AI-Automation-MicroBurstMe-i7smhou68gfwfou"
-                   target="_blank"
-                   rel="noopener noreferrer"
-                   class="btn btn-primary btn-sm">
-                   Blueprint
-                </a>
+                <a href="#contactForm" class="btn btn-outline" style="padding: 8px 16px; min-height: auto; font-size: 0.8rem;">Contact Us</a>
             </nav>
         </div>
     </header>
 
-    <!-- ================= HERO ================= -->
     <section class="hero">
         <div class="container">
-            <h1>Streamline Your Digital Marketing with AI Automation</h1>
-            <p>Deploy high-efficiency workflows that scale your business while you sleep.</p>
-            <a href="https://gamma.app/docs/Streamline-Your-Digital-Marketing-with-AI-Automation-MicroBurstMe-i7smhou68gfwfou"
-               target="_blank"
-               rel="noopener noreferrer"
-               class="btn btn-primary">
+            <h1>Streamline Your Digital Marketing with <span style="color: var(--primary)">AI Automation</span></h1>
+            <p>Deploy high-efficiency workflows that scale your business while you sleep. Stop trading time for money.</p>
+            
+            <a href="https://gamma.app/docs/Streamline-Your-Digital-Marketing-with-AI-Automation-MicroBurstMe-i7smhou68gfwfou" target="_blank" class="btn btn-primary">
                View the Automation Blueprint
             </a>
         </div>
     </section>
 
-    <!-- ================= FEATURES ================= -->
     <section class="features">
         <div class="container">
+            <h2 style="text-align: center;">Why Automate?</h2>
             <div class="grid">
                 <div class="card">
-                    <h3>Fast Setup</h3>
-                    <p>Get your AI systems running in hours, not weeks.</p>
+                    <h3 style="color: var(--primary); margin-bottom: 10px;">🚀 Fast Setup</h3>
+                    <p style="color: var(--text-muted);">Get your AI systems running in hours, not weeks.</p>
                 </div>
                 <div class="card">
-                    <h3>24/7 Scale</h3>
-                    <p>Your marketing works around the clock without extra overhead.</p>
+                    <h3 style="color: var(--primary); margin-bottom: 10px;">📈 24/7 Scale</h3>
+                    <p style="color: var(--text-muted);">Your marketing works around the clock without extra overhead.</p>
                 </div>
                 <div class="card">
-                    <h3>Mobile Ready</h3>
-                    <p>Fully maneuverable on all devices and screen sizes.</p>
+                    <h3 style="color: var(--primary); margin-bottom: 10px;">📱 Mobile Ready</h3>
+                    <p style="color: var(--text-muted);">Fully maneuverable on all devices and screen sizes.</p>
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- ================= FOOTER ================= -->
-    <footer>
-        © <span id="year"></span> MicroBurstMedia. All rights reserved.
+    <section class="contact-section" id="contactForm">
+        <div class="container" style="text-align: center;">
+            <h2 style="margin-bottom: 30px;">Request More Information</h2>
+            
+            <form id="googleSheetForm" class="glass-form">
+                <div class="form-group">
+                    <label>Full Name</label>
+                    <input type="text" name="name" required placeholder="John Doe">
+                </div>
+                <div class="form-group">
+                    <label>Email Address</label>
+                    <input type="email" name="email" required placeholder="john@example.com">
+                </div>
+                <div class="form-group">
+                    <label>How can AI help your business?</label>
+                    <textarea name="message" rows="4" required placeholder="Tell us about your current workflow..."></textarea>
+                </div>
+                <button type="submit" id="submitBtn" class="btn btn-primary" style="width: 100%;">Submit to Dashboard</button>
+            </form>
+        </div>
+    </section>
+
+    <footer style="text-align: center; padding: 40px 0; border-top: 1px solid rgba(255,255,255,0.1); color: var(--text-muted); font-size: 0.9rem;">
+        <div class="container">
+            <p>&copy; 2026 MicroBurstMedia. All rights reserved.</p>
+        </div>
     </footer>
 
-    <!-- ================= SCRIPT ================= -->
     <script>
-        window.onload = () => {
-            setTimeout(() => {
-                document.getElementById('popup').classList.add('active');
-            }, 500);
+        // Modal Logic
+        document.addEventListener('DOMContentLoaded', function() {
+            setTimeout(() => { document.getElementById('disclaimerModal').classList.add('active'); }, 500);
+        });
+        function closeModal() { document.getElementById('disclaimerModal').classList.remove('active'); }
 
-            document.getElementById('year').textContent = new Date().getFullYear();
-        };
+        // Google Sheets Form Logic with Debugger
+        const scriptURL = 'https://script.google.com/macros/s/AKfycbzF9x_0BLUZ8DrvE32X47xAHn7CNH-t1eMlMfIgieUxJLzI5WYr8Dpzytb2FLp7vYCv/exec';
+        const form = document.getElementById('googleSheetForm');
+        const btn = document.getElementById('submitBtn');
 
-        function closePopup() {
-            document.getElementById('popup').classList.remove('active');
-        }
+        form.addEventListener('submit', e => {
+            e.preventDefault();
+            btn.disabled = true;
+            btn.innerText = "Sending Data...";
+
+            // Create payload
+            let requestBody = new FormData(form);
+
+            fetch(scriptURL, { method: 'POST', body: requestBody })
+                .then(response => {
+                    // Debug Alert: Show successful network connection
+                    alert("DEBUG INFO: Network connection successful. Data pushed to Google Script.");
+                    
+                    btn.innerText = "Success!";
+                    btn.style.background = "var(--success)";
+                    form.reset();
+                    
+                    // Reset button after 3 seconds
+                    setTimeout(() => {
+                        btn.disabled = false;
+                        btn.innerText = "Submit to Dashboard";
+                        btn.style.background = "linear-gradient(135deg, var(--primary), var(--accent))";
+                    }, 3000);
+                })
+                .catch(error => {
+                    // Debug Alert: Show exactly why it failed
+                    alert("DEBUG ERROR: Fetch failed. Details: " + error.message);
+                    
+                    btn.disabled = false;
+                    btn.innerText = "Error. Try Again.";
+                    btn.style.background = "#ef4444"; // Red for error
+                });
+        });
     </script>
-
 </body>
 </html>
