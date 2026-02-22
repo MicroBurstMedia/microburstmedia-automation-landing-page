@@ -1,3 +1,5 @@
+
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -188,9 +190,9 @@
 
     <div id="disclaimerModal" class="modal-overlay">
         <div class="modal-content">
-            <h2 style="margin-bottom: 15px;">Welcome This Site is Operated and Managed by Digital Marketing Network, MicroBurstMedia</h2>
+            <h2 style="margin-bottom: 15px;">Welcome this Site is Operated and Managed by Digital Marketing Network, MicroBurstMedia</h2>
             <p style="color: var(--text-muted); margin-bottom: 25px;">
-                By proceeding, you agree to our online business terms and policy agreements.
+                By proceeding, you agree to the terms and policy agreements of this digital ecommercial library website hosting digital service products and resources. Disclaimer: We may earn a small commission for qualified purchases.
             </p>
             <button class="btn btn-primary" onclick="closeModal()">Proceed to Website</button>
         </div>
@@ -207,8 +209,8 @@
 
     <section class="hero">
         <div class="container">
-            <h1>Streamline Your Digital Marketing with <span style="color: var(--primary)">AI Automation Workflows</span></h1>
-            <p>Deploy high-efficiency workflows that scale your business while you sleep. Stop trading time for money.</p>
+            <h1>Streamline Your Business Operations Online with <span style="color: var(--primary)">AI Automation Workflows</span></h1>
+            <p>Learn how we deploy automation workflow systems that assist with handling and operating business administrative tasks while you sleep. Stop working harder, start earning smarter.</p>
             
             <a href="https://gamma.app/docs/Streamline-Your-Digital-Marketing-with-AI-Automation-MicroBurstMe-i7smhou68gfwfou" target="_blank" class="btn btn-primary">
                View the Automation Blueprint
@@ -238,22 +240,22 @@
 
     <section class="contact-section" id="contactForm">
         <div class="container" style="text-align: center;">
-            <h2 style="margin-bottom: 30px;">Request More Information</h2>
+            <h2 style="margin-bottom: 30px;">Request for AI Workflow Details</h2>
             
             <form id="googleSheetForm" class="glass-form">
                 <div class="form-group">
-                    <label>Full Name</label>
+                    <label>Full Name*</label>
                     <input type="text" name="name" required placeholder="John Doe">
                 </div>
                 <div class="form-group">
-                    <label>Email Address</label>
+                    <label>Email Address*</label>
                     <input type="email" name="email" required placeholder="john@example.com">
                 </div>
                 <div class="form-group">
-                    <label>How can AI help your business?</label>
-                    <textarea name="message" rows="4" required placeholder="Tell us about your current workflow..."></textarea>
+                    <label>Business Web Link?*</label>
+                    <textarea name="message" rows="4" required placeholder="Input your business web address link [https://www.johndoe.com] don't have one enter 'Not applicable'... "></textarea>
                 </div>
-                <button type="submit" id="submitBtn" class="btn btn-primary" style="width: 100%;">Submit to Dashboard</button>
+                <button type="submit" id="submitBtn" class="btn btn-primary" style="width: 100%;">Submit to Request Details</button>
                 <p id="formStatus" style="margin-top: 15px; font-weight: 600; display: none;"></p>
             </form>
         </div>
@@ -284,17 +286,17 @@
         btn.disabled = true;
         btn.innerText = "Processing...";
         statusMsg.style.display = "block";
-        statusMsg.innerText = "AI delivering your message...";
+        statusMsg.innerText = "AI is now delivering your message...";
 
         fetch(scriptURL, { method: 'POST', body: new FormData(form)})
             .then(response => {
                 btn.innerText = "Sent Successfully";
                 btn.style.background = "var(--success)";
-                statusMsg.innerText = "Success! Your data is in the sheet.";
+                statusMsg.innerText = "Success! Your message has been sent. You should be receiving an email shortly, please check your inbox and spam folders.";
                 statusMsg.style.color = "var(--success)";
                 form.reset();
                 
-                // BOUNCE BACK: Returns button to normal after 3 seconds
+                // BOUNCE BACK: Returns button to normal after 5 seconds
                 setTimeout(() => {
                     btn.disabled = false;
                     btn.innerText = "Submit to Dashboard";
