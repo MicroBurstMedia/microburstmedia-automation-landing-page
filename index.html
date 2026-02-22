@@ -266,61 +266,49 @@
         </div>
     </footer>
 
-    <script>
-        // 1. MODAL LOGIC
-        document.addEventListener('DOMContentLoaded', function() {
-            const modal = document.getElementById('disclaimerModal');
-            if (modal) {
-                setTimeout(() => { modal.classList.add('active'); }, 500);
-            }
-        });
-        
-        function closeModal() { 
-            document.getElementById('disclaimerModal').classList.remove('active'); 
-        }
+ <script>
+    // 1. MODAL LOGIC
+    document.addEventListener('DOMContentLoaded', function() {
+        const modal = document.getElementById('disclaimerModal');
+        if (modal) setTimeout(() => { modal.classList.add('active'); }, 500);
+    });
+    function closeModal() { document.getElementById('disclaimerModal').classList.remove('active'); }
 
-        // 2. UNIFIED FORM LOGIC
-        const scriptURL = 'https://script.google.com/macros/s/AKfycbxua0awPLA7TPYZKdiD5d_PqamGDfN9SOZqJiNZrfkOPvdhVqWYrB7mK9KBrmIMuI_Z/exec';
-        const form = document.getElementById('googleSheetForm');
-        const btn = document.getElementById('submitBtn');
-        const statusMsg = document.getElementById('formStatus');
+    // 2. FORM LOGIC (CONSOLIDATED)
+    const scriptURL = 'https://script.google.com/macros/s/AKfycbxua0awPLA7TPYZKdiD5d_PqamGDfN9SOZqJiNZrfkOPvdhVqWYrB7mK9KBrmIMuI_Z/exec';
+    const form = document.getElementById('googleSheetForm'); // MUST MATCH FORM ID
+    const btn = document.getElementById('submitBtn');
+    const statusMsg = document.getElementById('formStatus');
 
-        form.addEventListener('submit', e => {
-            e.preventDefault();
-            
-            // UI Feedback
-            btn.disabled = true;
-            btn.innerText = "Processing...";
-            statusMsg.style.display = "block";
-            statusMsg.innerText = "AI delivering your message...";
-            statusMsg.style.color = "var(--text-muted)";
+    form.addEventListener('submit', e => {
+        e.preventDefault();
+        btn.disabled = true;
+        btn.innerText = "Processing...";
+        statusMsg.style.display = "block";
+        statusMsg.innerText = "AI delivering your message...";
 
-            // Sending Data
-            fetch(scriptURL, { method: 'POST', body: new FormData(form)})
-                .then(response => {
-                    // Success State
-                    btn.innerText = "Sent Successfully";
-                    btn.style.background = "var(--success)";
-                    statusMsg.innerText = "Success! Data logged to your Google Sheet.";
-                    statusMsg.style.color = "var(--success)";
-                    form.reset();
-                    
-                    // Reset button back to default after 3 seconds
-                    setTimeout(() => {
-                        btn.disabled = false;
-                        btn.innerText = "Submit to Dashboard";
-                        btn.style.background = ""; // Resets to original CSS gradient
-                        statusMsg.style.display = "none";
-                    }, 3000);
-                })
-                .catch(error => {
-                    // Error State
-                    console.error('Error!', error.message);
+        fetch(scriptURL, { method: 'POST', body: new FormData(form)})
+            .then(response => {
+                btn.innerText = "Sent Successfully";
+                btn.style.background = "var(--success)";
+                statusMsg.innerText = "Success! Your data is in the sheet.";
+                statusMsg.style.color = "var(--success)";
+                form.reset();
+                
+                // BOUNCE BACK: Returns button to normal after 3 seconds
+                setTimeout(() => {
                     btn.disabled = false;
-                    btn.innerText = "Try Again";
-                    statusMsg.innerText = "Connection error. Please verify your script deployment.";
-                    statusMsg.style.color = "#ef4444";
-                });
-        });
-    </script>
+                    btn.innerText = "Submit to Dashboard";
+                    btn.style.background = ""; 
+                    statusMsg.style.display = "none";
+                }, 3000);
+            })
+            .catch(error => {
+                btn.disabled = false;
+                btn.innerText = "Try Again";
+                statusMsg.innerText = "Error: Connection failed.";
+                statusMsg.style.color = "#ef4444";
+            });
+    });
+</script>
 </body>
