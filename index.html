@@ -7,7 +7,9 @@
     <title>Business Automation & Web Solutions | MicroBurstMedia</title>
     <meta name="description" content="Optimize your business with AI Automation. Done for you by Digital Marketing Network, MicroBurstMedia, specializing in scaling business utilizing IT strategies.">
     <meta name="keywords" content="AI Automation, Digital Marketing, Business Workflow, MicroBurstMedia, Web Automation">
-    <link rel="icon" type="image/x-icon" href="https://cdn.launchcart.com/s47561/1695846294-bb2c7ca6-3563-4ba6-a820-11297c768cd2-thumb.png"> <script type="application/ld+json">
+    <link rel="icon" type="image/x-icon" href="https://cdn.launchcart.com/s47561/1695846294-bb2c7ca6-3563-4ba6-a820-11297c768cd2-thumb.png"> 
+    
+    <script type="application/ld+json">
     {
       "@context": "https://schema.org",
       "@type": "Organization",
@@ -28,7 +30,6 @@
             --text-main: #f8fafc;
             --text-muted: #94a3b8;
             --success: #10b981;
-            /* Header Color Samples */
             --header-bg: rgba(15, 23, 42, 0.95);
             --header-text: #ffffff;
             --header-height: 80px;
@@ -48,7 +49,7 @@
             overflow-x: hidden;
         }
 
-        /* --- HEADER STYLE INTEGRATION --- */
+        /* --- HEADER STYLE --- */
         header {
             position: sticky;
             top: 0;
@@ -62,21 +63,19 @@
         .z-nav-container {
             display: flex;
             align-items: center;
-            justify-content: space-between;
+            justify-content: center; /* Center the whole group */
             height: 100%;
             max-width: 1300px;
             margin: 0 auto;
             padding: 0 20px;
+            gap: 40px; /* Controls link-to-logo distance */
         }
 
         .z-nav-section {
             display: flex;
             align-items: center;
-            gap: 20px;
-            flex: 1;
+            gap: 25px; /* Spacing between individual links */
         }
-
-        .z-nav-section.right { justify-content: flex-end; }
 
         .z-nav-link {
             text-decoration: none;
@@ -84,6 +83,7 @@
             font-size: 14px;
             font-weight: 500;
             transition: color 0.2s;
+            white-space: nowrap;
         }
 
         .z-nav-link:hover { color: var(--primary); }
@@ -97,6 +97,7 @@
             font-weight: 800;
             font-size: 1.2rem;
             text-align: center;
+            flex-shrink: 0;
         }
 
         .z-logo-group img {
@@ -155,6 +156,15 @@
         .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 20px; margin-top: 40px; }
         .card { background: var(--bg-card); padding: 30px; border-radius: 12px; border: 1px solid rgba(255,255,255,0.05); }
 
+        /* --- CONTACT SECTION SPACING --- */
+        .contact-section {
+            padding: 80px 0; /* Balanced spacing above and below section */
+        }
+
+        .contact-section h2 {
+            margin-bottom: 40px; /* Increased space between title and form box */
+        }
+
         .glass-form {
             background: rgba(30, 41, 59, 0.6);
             backdrop-filter: blur(12px);
@@ -172,7 +182,11 @@
         }
 
         /* --- FOOTER --- */
-        footer { background: #000; padding: 40px 20px; text-align: center; }
+        footer { 
+            background: #000; 
+            padding: 60px 20px; /* Matched top padding to contact section */
+            text-align: center; 
+        }
         .footer-links { display: flex; justify-content: center; gap: 15px; flex-wrap: wrap; margin-top: 15px; }
         .footer-links a { color: #00aaff; text-decoration: none; cursor: pointer; }
 
@@ -182,7 +196,8 @@
         .modal-content { background: var(--bg-card); padding: 30px; border-radius: 16px; max-width: 500px; width: 90%; text-align: center; border: 1px solid var(--accent); }
 
         @media (max-width: 850px) {
-            .z-nav-section.left { display: none; }
+            .z-nav-container { flex-direction: column; gap: 15px; height: auto; padding: 15px; }
+            header { height: auto; }
         }
     </style>
 </head>
@@ -192,13 +207,13 @@
         <div class="modal-content">
             <h2>Site Managed by Digital Marketing Network, MicroBurstMedia</h2>
             <p style="color: var(--text-muted); margin: 20px 0;">By proceeding, you agree to all policies shown on this site. Disclaimer: We may earn a commission for referrals.</p>
-            <button class="btn btn-primary" onclick="closeModal()">Proceed to Website</button>
+            <button class="btn btn-primary" onclick="acceptTerms()">Proceed to Website</button>
         </div>
     </div>
 
     <header>
         <div class="z-nav-container">
-            <nav class="z-nav-section left">
+            <nav class="z-nav-section">
                 <a href="https://microburstmedia.aweb.page/p/c1b8123a-0afb-4a70-8a3f-35139cfdd4f2" class="z-nav-link">About</a>
                 <a href="https://microburstmedia.wordpress.com/" class="z-nav-link">Portfolio</a>
                 <a href="https://micro-burst-media.launchcart.store/" class="z-nav-link">Store</a>
@@ -209,10 +224,10 @@
                 <span>MBMN</span>
             </a>
 
-            <nav class="z-nav-section right">
-                <a href="https://campsite.to/microburstmedia" class="z-nav-link">Resources Center</a>
-                <a href="https://microburstmedia.wixsite.com/digitalmarket" class="z-nav-link">Online Market</a>
-                <a href="#" class="z-nav-link">Business Center</a>
+            <nav class="z-nav-section">
+                <a href="https://campsite.to/microburstmedia" class="z-nav-link">Resources</a>
+                <a href="https://microburstmedia.wixsite.com/digitalmarket" class="z-nav-link">Market</a>
+                <a href="#" class="z-nav-link">Business</a>
             </nav>
         </div>
     </header>
@@ -248,7 +263,7 @@
 
         <section class="contact-section">
             <div class="container" style="text-align: center;">
-                <h2 style="margin-bottom: 15px;">Request Automation Details</h2>
+                <h2>Request Automation Details</h2>
                 <form id="googleSheetForm" class="glass-form">
                     <div class="form-group">
                         <label>Full Name*</label>
@@ -263,7 +278,7 @@
                         <textarea name="message" rows="4" placeholder="Enter link or 'N/A'"></textarea>
                     </div>
                     <button type="submit" id="submitBtn" class="btn btn-primary" style="width: 100%;">Submit Request</button>
-                    <p id="formStatus" style="margin-top: 60px; display: none;"></p>
+                    <p id="formStatus" style="margin-top: 20px; display: none;"></p>
                 </form>
             </div>
         </section>
@@ -283,14 +298,27 @@
     </footer>
 
     <script>
-        // MODAL
+        // MODAL WITH PERSISTENCE (COOKIE TRACKER STYLE)
         document.addEventListener('DOMContentLoaded', () => {
-            const modal = document.getElementById('disclaimerModal');
-            setTimeout(() => { modal.classList.add('active'); }, 500);
-        });
-        function closeModal() { document.getElementById('disclaimerModal').classList.remove('active'); }
+            const hasAccepted = localStorage.getItem('mbm_terms_accepted');
+            const acceptTimestamp = localStorage.getItem('mbm_accept_date');
+            const now = new Date().getTime();
+            const thirtyDays = 30 * 24 * 60 * 60 * 1000;
 
-        // FORM
+            // Check if user has accepted within the last 30 days
+            if (!hasAccepted || (now - acceptTimestamp > thirtyDays)) {
+                const modal = document.getElementById('disclaimerModal');
+                setTimeout(() => { modal.classList.add('active'); }, 500);
+            }
+        });
+
+        function acceptTerms() {
+            localStorage.setItem('mbm_terms_accepted', 'true');
+            localStorage.setItem('mbm_accept_date', new Date().getTime());
+            document.getElementById('disclaimerModal').classList.remove('active');
+        }
+
+        // FORM LOGIC
         const scriptURL = 'https://script.google.com/macros/s/AKfycbxua0awPLA7TPYZKdiD5d_PqamGDfN9SOZqJiNZrfkOPvdhVqWYrB7mK9KBrmIMuI_Z/exec';
         const form = document.getElementById('googleSheetForm');
         const btn = document.getElementById('submitBtn');
