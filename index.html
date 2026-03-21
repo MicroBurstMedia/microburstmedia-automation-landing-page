@@ -51,22 +51,87 @@
         .z-logo-group img { height: 35px; border-radius: 4px; }
 
         /* --- HERO --- */
-        .hero { padding: 60px 0 80px; text-align: center; background: radial-gradient(circle at top, rgba(59, 130, 246, 0.15), transparent 70%); }
+        .hero { padding: 40px 0 60px; text-align: center; background: radial-gradient(circle at top, rgba(59, 130, 246, 0.15), transparent 70%); }
         .hero h1 { font-size: clamp(2rem, 5vw, 3.5rem); 
     margin-bottom: 20px; max-width: 850px; 
     margin-left: auto;
-    margin-right: auto; }
+    margin-right: auto; 
+    line-height: 1.3;
+    }
         .hero p { color: var(--text-muted); max-width: 700px; margin: 0 auto; font-size: 1.2rem; }
 
-        /* --- AD STACK (WHY AUTOMATE) --- */
-        .ad-stack { display: flex; flex-direction: column; gap: 40px; max-width: 900px; margin: 50px auto; }
-        .ad-card { display: grid; grid-template-columns: 1.2fr 1fr; background: var(--bg-card); border-radius: 20px; overflow: hidden; border: 1px solid rgba(255, 255, 255, 0.05); transition: transform 0.3s ease; }
-        .ad-card:hover { transform: scale(1.01); border-color: var(--primary); }
-        .ad-media { background: #000; aspect-ratio: 16/9; line-height: 0; }
-        .ad-media iframe, .ad-media img { width: 100%; height: 100%; border: none; object-fit: cover; }
-        .ad-content { padding: 40px; display: flex; flex-direction: column; justify-content: center; align-items: flex-start; }
-        .ad-content h3 { font-size: 1.6rem; margin-bottom: 15px; color: var(--primary); }
-        .ad-content p { color: var(--text-muted); margin-bottom: 25px; font-size: 0.95rem; }
+       /* --- NEW AD STACKED CARD DESIGN --- */
+.ad-stack { 
+    display: flex; 
+    flex-direction: column; 
+    gap: 60px; /* Increased gap for better separation */
+    max-width: 1000px; /* Slightly wider to accommodate the narrow info row */
+    margin: 50px auto; 
+}
+
+.ad-card { 
+    display: flex;
+    flex-direction: column; /* Stack video on top of info */
+    background: var(--bg-card); 
+    border-radius: 20px; 
+    overflow: hidden; 
+    border: 1px solid rgba(255, 255, 255, 0.05); 
+    transition: transform 0.3s ease; 
+}
+
+.ad-media { 
+    width: 100%;
+    aspect-ratio: 16/9; /* Perfect YouTube formatting */
+    background: #000;
+}
+
+/* This ensures the video fills the 16:9 container perfectly */
+.ad-media iframe {
+    width: 100%;
+    height: 100%;
+    border: none;
+    display: block;
+}
+
+/* This is the "Straight Narrow" info bar underneath the video */
+.ad-content { 
+    padding: 25px 40px; 
+    display: flex; 
+    align-items: center; /* Vertical alignment */
+    justify-content: space-between; /* Spreads Title, Desc, and Button across the row */
+    gap: 30px; 
+    background: rgba(255,255,255,0.02);
+}
+
+.ad-content h3 { 
+    font-size: 1.3rem; 
+    color: var(--primary); 
+    white-space: nowrap; /* Keeps title on one line */
+    flex: 0 0 auto;
+}
+
+.ad-content p { 
+    color: var(--text-muted); 
+    font-size: 0.95rem; 
+    flex: 1; /* Takes up the remaining middle space */
+    margin: 0; /* Remove bottom margin since it's a row now */
+}
+
+.ad-content .btn { 
+    flex: 0 0 auto;
+    padding: 10px 20px; /* Slightly more compact for the row */
+}
+
+/* --- MOBILE RESPONSIVENESS --- */
+@media (max-width: 900px) {
+    .ad-content {
+        flex-direction: column; /* Stack them back up on mobile */
+        align-items: flex-start;
+        gap: 15px;
+        padding: 30px;
+    }
+    .ad-content p { margin-bottom: 10px; }
+}
 
         /* --- FEATURED SOLUTION (CONTACT) --- */
         .contact-section { padding: 80px 0; background: rgba(255,255,255,0.02); }
@@ -111,6 +176,34 @@
             .cta-button-group { flex-direction: column; }
             .cta-button-group .btn { width: 100%; }
         }
+        
+        /* --- SCROLL TO TOP BUTTON --- */
+#scrollTopBtn {
+    position: fixed;
+    bottom: 30px;
+    right: 30px;
+    width: 50px;
+    height: 50px;
+    background: var(--primary);
+    color: white;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    z-index: 1000;
+    opacity: 0;
+    visibility: hidden;
+    transition: all 0.3s ease;
+    border: none;
+    box-shadow: 0 10px 20px rgba(0,0,0,0.3);
+}
+
+#scrollTopBtn.show {
+    opacity: 1;
+    visibility: visible;
+}
+
     </style>
 </head>
 <body>
@@ -146,27 +239,27 @@
        <section class="hero">
     <div class="container">
         <h1>Digital Marketing Network <br> Outsourcing Business Media Products and Services Online</h1>
-        <p>For details contact our IT support, during business service hours: <br> Monday to Friday from 9:00 AM - 6:00 PM EST <br> Business Phone Number: +1 (954) 600-8595 <br> Business Email: microburstmediasolutions@outlook.com</p>
+        <p>For details contact our IT support specialists, during business service hours: <br> Monday to Friday from 9:00 AM - 6:00 PM EST <br> Business Phone Number: +1 (954) 600-8595 <br> Business Email: microburstmediasolutions@outlook.com</p>
     </div>
 </section>
 
         <section class="features">
             <div class="container">
-                <h2 style="text-align: center; margin-bottom: 30px;">Are you looking to incorporate AI into your business operations? <br> Allow us to handle all of the tech headaches for you, at your business expense. <br> Contact us for an AI consultation, stop working harder, start earning smarter today! </h2>
+                <h2 style="text-align: center; margin-bottom: 30px;">Are you looking to incorporate AI into your business operations? <br> Allow us to handle all of the tech headaches for you, at your business expense. <br> Stop working harder, start earning smarter today! </h2>
                 <div class="ad-stack">
                     <div class="ad-card">
-                        <div class="ad-media">
-                            <iframe src="https://www.youtube.com/embed/bO-ND7GvaOA?si=dfR6_02Ec2UDtuiA" allowfullscreen></iframe>
-                        </div>
-                        <div class="ad-content">
-                            <h3>🚀 Fast Setup</h3>
-                            <p>Have automated systems running on the backend in days, not weeks. Our steady deployment ensures no downtime.</p>
-                            <a href="https://microburstmedia.aweb.page/p/c1b8123a-0afb-4a70-8a3f-35139cfdd4f2" class="btn btn-outline">Learn More</a>
-                        </div>
-                    </div>
+    <div class="ad-media">
+        <iframe src="https://www.youtube.com/embed/bO-ND7GvaOA?si=dfR6_02Ec2UDtuiA&rel=0" allowfullscreen></iframe>
+    </div>
+    <div class="ad-content">
+        <h3>🚀 Fast Setup</h3>
+        <p>Have automated systems running on the backend in days, not weeks. Our steady deployment ensures no downtime.</p>
+        <a href="https://microburstmedia.aweb.page/p/c1b8123a-0afb-4a70-8a3f-35139cfdd4f2" class="btn btn-outline">Learn More</a>
+    </div>
+</div>
                     <div class="ad-card">
                         <div class="ad-media">
-                            <iframe src="https://www.youtube.com/embed/inciEY-W7BE?si=UcC8fdQnYKWN3lEL" allowfullscreen></iframe>
+                            <iframe src="https://www.youtube.com/embed/inciEY-W7BE?si=UcC8fdQnYKWN3lEL&rel=0" allowfullscreen></iframe>
                         </div>
                         <div class="ad-content">
                             <h3>📈 24/7 Scale</h3>
@@ -193,7 +286,7 @@
                 <h2 style="margin-bottom: 30px;">Featured Business Product</h2>
                 <div class="glass-form">
                     <div class="ad-media" style="border-radius: 12px; margin-bottom: 25px;">
-                        <iframe src="https://www.youtube.com/embed/4zpyQ8CFjj4?si=CsV7BhSJ7ogyP2_1" allowfullscreen></iframe>
+                        <iframe src="https://www.youtube.com/embed/4zpyQ8CFjj4?si=CsV7BhSJ7ogyP2_1&rel=0" allowfullscreen></iframe>
                     </div>
                     <h3>Ready to Automate Your Business Workflow?</h3>
                     <p style="color: var(--text-muted); margin: 15px 0 30px;">Acquire our exclusive beginner's guidebook on AI Automation. Now available on sale for purchase when you use code: OFF90 at checkout for 90% OFF.</p>
@@ -242,6 +335,19 @@
             localStorage.setItem('mbm_accept_date', new Date().getTime());
             document.getElementById('disclaimerModal').classList.remove('active');
         }
+        
+        window.addEventListener('scroll', () => {
+    const btn = document.getElementById('scrollTopBtn');
+    if (window.scrollY > 500) {
+        btn.classList.add('show');
+    } else {
+        btn.classList.remove('show');
+    }
+});
+        
     </script>
+    
+    <button id="scrollTopBtn" onclick="window.scrollTo({top: 0, behavior: 'smooth'})">↑</button>
+    
 </body>
 </html>
