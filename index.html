@@ -8,7 +8,8 @@
   gtag('js', new Date());
 
   gtag('config', 'G-B933Q59SFQ');
-</script> 
+</script>
+
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Digital Marketing Network | MicroBurstMedia</title>
     <meta name="description" content="Optimize your business with AI Automation. Done for you by Digital Marketing Network, MicroBurstMedia.">
@@ -204,9 +205,64 @@
     visibility: visible;
 }
 
+/* --- TIMER BANNER STYLES --- */
+:root {
+    --timer-bg: #111111;
+    --timer-accent: #3b82f6; /* Matching your blue primary color */
+    --link-bg: #3b82f6;
+    --link-text: #ffffff;
+}
+.timer-banner {
+    width: 100%;
+    background: var(--timer-bg);
+    color: white;
+    padding: 10px 20px;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: center;
+    gap: 20px;
+    font-family: 'Segoe UI', sans-serif;
+    z-index: 2001; /* Higher than your header */
+    border-bottom: 1px solid rgba(255,255,255,0.1);
+}
+.timer-text { font-weight: 700; font-size: 0.9rem; text-transform: uppercase; }
+.countdown-display { display: flex; gap: 12px; }
+.unit-group { display: flex; flex-direction: column; align-items: center; min-width: 30px; }
+.unit-number { font-size: 1.1rem; font-weight: 800; color: var(--timer-accent); }
+.unit-label { font-size: 0.55rem; text-transform: uppercase; opacity: 0.6; }
+.timer-link {
+    background: var(--link-bg);
+    color: var(--link-text);
+    text-decoration: none;
+    padding: 6px 16px;
+    border-radius: 50px;
+    font-size: 0.75rem;
+    font-weight: 700;
+    text-transform: uppercase;
+}
+
+.timer-banner {
+    display: none; /* Hide by default */
+}
+
     </style>
+    
+    <script async src="https://js.stripe.com/v3/buy-button.js"></script>
+    
 </head>
 <body>
+
+<div class="timer-banner" id="promo-banner">
+    <div class="timer-text">Limited Time Offer Ends In:</div>
+    <div class="countdown-display">
+        <div class="unit-group"><span id="d_val">00</span><span class="unit-label">Days</span></div>
+        <div class="unit-group"><span id="h_val">00</span><span class="unit-label">Hrs</span></div>
+        <div class="unit-group"><span id="m_val">00</span><span class="unit-label">Min</span></div>
+        <div class="unit-group"><span id="s_val">00</span><span class="unit-label">Sec</span></div>
+    </div>
+    <a href="https://buy.stripe.com/5kAbL1eJ90rbgAU9Bb" class="timer-link">Claim 90% OFF</a>
+</div>
 
  <div id="disclaimerModal" class="modal-overlay">
         <div class="modal-content">
@@ -239,7 +295,7 @@
        <section class="hero">
     <div class="container">
         <h1>Digital Marketing Network <br> Outsourcing Business Media Products and Services Online</h1>
-        <p>For details contact our IT support specialists, during business service hours: <br> Monday to Friday from 9:00 AM - 6:00 PM EST <br> Business Phone Number: +1 (954) 600-8595 <br> Business Email: microburstmediasolutions@outlook.com</p>
+        <p>Got Questions? Contact us for details, during business hours: <br> Monday to Friday from 9:00 AM - 6:00 PM EST <br> Business Phone Number: +1 (954) 600-8595 <br> Business Email: microburstmediasolutions@outlook.com</p>
     </div>
 </section>
 
@@ -290,8 +346,12 @@
                     </div>
                     <h3>Ready to Automate Your Business Workflow?</h3>
                     <p style="color: var(--text-muted); margin: 15px 0 30px;">Acquire our exclusive beginner's guidebook on AI Automation. Now available on sale for purchase when you use code: OFF90 at checkout for 90% OFF.</p>
-                    <div class="cta-button-group">
-                        <a href="https://buy.stripe.com/5kAbL1eJ90rbgAU9Bb" class="btn btn-primary" style="flex: 1; min-width: 200px;">Acquire E-Book</a>
+                   <div class="cta-button-group">
+    <stripe-buy-button
+        buy-button-id="buy_btn_1PIt8WCYcbtuqUpVCnNBoInc"
+        publishable-key="pk_live_51N5Y2tCYcbtuqUpVJotBZTq8zGIoKRhIiWf57vRPBD4PBgevMxy4H9XHvQjRRaey4HGspLDWAK0Cc27dRv7DWOqO00yY6sRNn0"
+        style="flex: 1; min-width: 200px;">
+    </stripe-buy-button>
                         <a href="https://campsite.to/microburstmedia" class="btn btn-outline" style="flex: 1; min-width: 200px;">Learn More</a>
                     </div>
                 </div>
@@ -344,6 +404,29 @@
         btn.classList.remove('show');
     }
 });
+        
+        // --- COUNTDOWN LOGIC ---
+const now_date = new Date();
+const targetDate = new Date(now_date.getFullYear(), now_date.getMonth() + 1, 1).getTime();
+
+function updateTimer() {
+    const now = new Date().getTime();
+    const diff = targetDate - now;
+    
+    if (diff > 0) {
+        document.getElementById("promo-banner").style.display = "flex";
+        // This ensures all numbers update correctly on your site
+        document.getElementById("d_val").innerText = Math.floor(diff / (1000 * 60 * 60 * 24)).toString().padStart(2, '0');
+        document.getElementById("h_val").innerText = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60)).toString().padStart(2, '0');
+        document.getElementById("m_val").innerText = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60)).toString().padStart(2, '0');
+        document.getElementById("s_val").innerText = Math.floor((diff % (1000 * 60)) / 1000).toString().padStart(2, '0');
+    } else {
+        document.getElementById("promo-banner").style.display = "none";
+    }
+}
+
+setInterval(updateTimer, 1000);
+updateTimer();
         
     </script>
     
