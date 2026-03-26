@@ -348,7 +348,7 @@
                     <h3>Ready to Automate Your Business Workflow?</h3>
                     <p style="color: var(--text-muted); margin: 15px 0 30px;">Acquire our exclusive beginner's guidebook on AI Automation. Now available on sale for purchase when you use code: OFF90 at checkout for 90% OFF.</p>
                    <div class="cta-button-group">
-                        <a href="https://buy.stripe.com/5kAbL1eJ90rbgAU9Bb" class="btn btn-primary" style="flex: 1; min-width: 200px;">Acquire E-Book</a>
+                        <button onclick="handleCheckout()" class="btn btn-primary" id="checkout-button" style="flex: 1; min-width: 200px;">Acquire E-Book</button>
                         <a href="https://campsite.to/microburstmedia" class="btn btn-outline" style="flex: 1; min-width: 200px;">Learn More</a>
                     </div>
                 </div>
@@ -375,59 +375,86 @@
         </div>
     </footer>
 
-    <script>
-        document.addEventListener('DOMContentLoaded', () => {
-            const hasAccepted = localStorage.getItem('mbm_terms_accepted');
-            const acceptTimestamp = localStorage.getItem('mbm_accept_date');
-            const now = new Date().getTime();
-            const thirtyDays = 30 * 24 * 60 * 60 * 1000;
+    <script src="https://js.stripe.com/v3/"></script>
+<script>
+    // 1. Initial Logic (Terms & Scroll)
+    document.addEventListener('DOMContentLoaded', () => {
+        const hasAccepted = localStorage.getItem('mbm_terms_accepted');
+        const acceptTimestamp = localStorage.getItem('mbm_accept_date');
+        const now = new Date().getTime();
+        const thirtyDays = 30 * 24 * 60 * 60 * 1000;
 
-            if (!hasAccepted || (now - acceptTimestamp > thirtyDays)) {
-                setTimeout(() => { document.getElementById('disclaimerModal').classList.add('active'); }, 500);
-            }
-        });
-
-        function acceptTerms() {
-            localStorage.setItem('mbm_terms_accepted', 'true');
-            localStorage.setItem('mbm_accept_date', new Date().getTime());
-            document.getElementById('disclaimerModal').classList.remove('active');
+        if (!hasAccepted || (now - acceptTimestamp > thirtyDays)) {
+            setTimeout(() => { document.getElementById('disclaimerModal').classList.add('active'); }, 500);
         }
-        
-        window.addEventListener('scroll', () => {
-    const btn = document.getElementById('scrollTopBtn');
-    if (window.scrollY > 500) {
-        btn.classList.add('show');
-    } else {
-        btn.classList.remove('show');
-    }
-});
-        
-        // --- COUNTDOWN LOGIC ---
-const now_date = new Date();
-const targetDate = new Date(now_date.getFullYear(), now_date.getMonth() + 1, 1).getTime();
+    });
 
-function updateTimer() {
-    const now = new Date().getTime();
-    const diff = targetDate - now;
-    
-    if (diff > 0) {
-        document.getElementById("promo-banner").style.display = "flex";
-        // This ensures all numbers update correctly on your site
-        document.getElementById("d_val").innerText = Math.floor(diff / (1000 * 60 * 60 * 24)).toString().padStart(2, '0');
-        document.getElementById("h_val").innerText = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60)).toString().padStart(2, '0');
-        document.getElementById("m_val").innerText = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60)).toString().padStart(2, '0');
-        document.getElementById("s_val").innerText = Math.floor((diff % (1000 * 60)) / 1000).toString().padStart(2, '0');
-    } else {
-        document.getElementById("promo-banner").style.display = "none";
+    function acceptTerms() {
+        localStorage.setItem('mbm_terms_accepted', 'true');
+        localStorage.setItem('mbm_accept_date', new Date().getTime());
+        document.getElementById('disclaimerModal').classList.remove('active');
     }
-}
-
-setInterval(updateTimer, 1000);
-updateTimer();
-        
-    </script>
     
-    <button id="scrollTopBtn" onclick="window.scrollTo({top: 0, behavior: 'smooth'})">↑</button>
+    window.addEventListener('scroll', () => {
+        const btn = document.getElementById('scrollTopBtn');
+        if (window.scrollY > 500) {
+            btn.classList.add('show');
+        } else {
+            btn.classList.remove('show');
+        }
+    });
+    
+    // 2. Countdown Logic
+    const targetDate = new Date(new Date().getFullYear(), new Date().getMonth() + 1, 1).getTime();
+
+    function updateTimer() {
+        const now = new Date().getTime();
+        const diff = targetDate - now;
+        
+        if (diff > 0) {
+            document.getElementById("promo-banner").style.display = "flex";
+            document.getElementById("d_val").innerText = Math.floor(diff / (1000 * 60 * 60 * 24)).toString().padStart(2, '0');
+            document.getElementById("h_val").innerText = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60)).toString().padStart(2, '0');
+            document.getElementById("m_val").innerText = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60)).toString().padStart(2, '0');
+            document.getElementById("s_val").innerText = Math.floor((diff % (1000 * 60)) / 1000).toString().padStart(2, '0');
+        } else {
+            document.getElementById("promo-banner").style.display = "none";
+        }
+    }
+    setInterval(updateTimer, 1000);
+    updateTimer();
+
+    // 3. Stripe Checkout Logic
+    const stripe = Stripe('pk_test_51N5Y2tCYcbtuqUpVR8YK6poRUn5YyEPkAxRMrIO0B1tQvM3EJVid1IdPjTk142N9l2S96XGUnLDeLWsYeJ9RzPKr00cHs2kgfJ'); 
+
+    async function handleCheckout() {
+        const button = document.getElementById('checkout-button');
+        const originalText = button.innerText;
+        button.innerText = "LOADING..."; 
+        
+        try {
+            const response = await fetch('https://mbmm-checkout-session-1.onrender.com/create-checkout-session', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' }
+            });
+
+            const session = await response.json();
+
+            const result = await stripe.redirectToCheckout({
+                sessionId: session.id,
+            });
+
+            if (result.error) {
+                alert(result.error.message);
+            }
+        } catch (error) {
+            console.error("Error:", error);
+            alert("Connection failed. Check if your Render server is awake.");
+        } finally {
+            button.innerText = originalText;
+        }
+    }
+</script>
     
 </body>
 </html>
