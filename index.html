@@ -453,10 +453,65 @@
     }
 </script>
 
+<style>
+    :root {
+        --glass-bg: rgba(30, 41, 59, 0.7);
+        --glass-border: rgba(255, 255, 255, 0.1);
+        --mbm-blue: #3b82f6;
+    }
+
+    /* Floating Button */
+    #chat-trigger {
+        position: fixed;
+        bottom: 25px;
+        right: 25px;
+        width: 60px;
+        height: 60px;
+        background: linear-gradient(135deg, var(--mbm-blue), #8b5cf6);
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        cursor: pointer;
+        box-shadow: 0 10px 25px rgba(0,0,0,0.3);
+        z-index: 1000;
+        transition: transform 0.3s;
+    }
+    #chat-trigger:hover { transform: scale(1.1); }
+
+    /* The Chat Window */
+    #chat-window {
+        position: fixed;
+        bottom: 100px;
+        right: 25px;
+        width: 350px;
+        height: 500px;
+        background: var(--glass-bg);
+        backdrop-filter: blur(15px);
+        -webkit-backdrop-filter: blur(15px);
+        border: 1px solid var(--glass-border);
+        border-radius: 20px;
+        display: none; /* Hidden by default */
+        flex-direction: column;
+        overflow: hidden;
+        z-index: 1000;
+        box-shadow: 0 20px 40px rgba(0,0,0,0.4);
+    }
+
+    #chat-header { padding: 15px; background: rgba(255,255,255,0.05); font-weight: bold; color: var(--mbm-blue); border-bottom: 1px solid var(--glass-border); }
+    #chat-messages { flex-grow: 1; overflow-y: auto; padding: 15px; font-size: 0.9rem; display: flex; flex-direction: column; gap: 10px; }
+    #chat-input-area { padding: 15px; display: flex; gap: 10px; background: rgba(0,0,0,0.2); }
+    #user-input { flex-grow: 1; background: transparent; border: 1px solid var(--glass-border); color: white; padding: 8px; border-radius: 8px; outline: none; }
+    #send-btn { background: var(--mbm-blue); color: white; border: none; padding: 8px 15px; border-radius: 8px; cursor: pointer; }
+
+    .msg-user { align-self: flex-end; background: var(--mbm-blue); padding: 8px 12px; border-radius: 12px 12px 0 12px; max-width: 80%; }
+    .msg-ai { align-self: flex-start; background: rgba(255,255,255,0.1); padding: 8px 12px; border-radius: 12px 12px 12px 0; max-width: 80%; }
+</style>
+
 <div id="chat-window">
-    <div id="chat-header">MBM AI Chat Support</div>
+    <div id="chat-header">MBM Support AI</div>
     <div id="chat-messages">
-        <div class="msg-ai">Hello! I'm a chat support representative for MicroBurstMedia. How can we assist you today?</div>
+        <div class="msg-ai">Hello! I'm the MBM strategist. How can I assist with your AI automation today?</div>
     </div>
     <div id="chat-input-area">
         <input type="text" id="user-input" placeholder="Ask me anything...">
