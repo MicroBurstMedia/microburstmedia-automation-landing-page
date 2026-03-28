@@ -421,32 +421,31 @@
     setInterval(updateTimer, 1000);
     updateTimer();
 
-    // 3. Stripe Checkout Logic
+    // 3. Unified System Logic (Stripe + Chatbot)
     const stripe = Stripe('pk_test_51N5Y2tCYcbtuqUpVR8YK6poRUn5YyEPkAxRMrIO0B1tQvM3EJVid1IdPjTk142N9l2S96XGUnLDeLWsYeJ9RzPKr00cHs2kgfJ'); 
+
+    // CHANGE THIS to your new unified Render Service URL
+    const MBMN_SERVER_URL = 'https://mbmn-checkout-session.onrender.com';
 
     async function handleCheckout() {
         const button = document.getElementById('checkout-button');
         const originalText = button.innerText;
-        button.innerText = "LOADING..."; 
-        
+        button.innerText = "LOADING...";                 
         try {
-            const response = await fetch('https://mbmn-checkout-session.onrender.com/create-checkout-session', {
+            const response = await fetch(`${MBMN_SERVER_URL}/create-checkout-session`, {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' }
             });
 
             const session = await response.json();
-
             const result = await stripe.redirectToCheckout({
                 sessionId: session.id,
             });
 
-            if (result.error) {
-                alert(result.error.message);
-            }
+            if (result.error) { alert(result.error.message); }
         } catch (error) {
-            console.error("Error:", error);
-            alert("Connection failed. Check if your Render server is awake.");
+            console.error("Stripe Error:", error);
+            alert("Checkout connection failed. Is the MBMN server awake?");
         } finally {
             button.innerText = originalText;
         }
@@ -455,134 +454,83 @@
 
 <style>
     :root {
-        --glass-bg: rgba(30, 41, 59, 0.7);
+        --glass-bg: rgba(30, 41, 59, 0.85);
         --glass-border: rgba(255, 255, 255, 0.1);
         --mbm-blue: #3b82f6;
     }
 
-    /* Floating Button */
     #chat-trigger {
-        position: fixed;
-        bottom: 25px;
-        right: 25px;
-        width: 60px;
-        height: 60px;
+        position: fixed; bottom: 25px; right: 25px; width: 60px; height: 60px;
         background: linear-gradient(135deg, var(--mbm-blue), #8b5cf6);
-        border-radius: 50%;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        cursor: pointer;
-        box-shadow: 0 10px 25px rgba(0,0,0,0.3);
-        z-index: 1000;
-        transition: transform 0.3s;
+        border-radius: 50%; display: flex; align-items: center; justify-content: center;
+        cursor: pointer; box-shadow: 0 10px 25px rgba(0,0,0,0.3); z-index: 2000;
     }
-    #chat-trigger:hover { transform: scale(1.1); }
 
-    /* The Chat Window */
     #chat-window {
-        position: fixed;
-        bottom: 100px;
-        right: 25px;
-        width: 350px;
-        height: 500px;
-        background: var(--glass-bg);
-        backdrop-filter: blur(15px);
-        -webkit-backdrop-filter: blur(15px);
-        border: 1px solid var(--glass-border);
-        border-radius: 20px;
-        display: none; 
-        flex-direction: column;
-        overflow: hidden;
-        z-index: 1000;
+        position: fixed; bottom: 100px; right: 25px; width: 350px; height: 500px;
+        background: var(--glass-bg); backdrop-filter: blur(15px);
+        border: 1px solid var(--glass-border); border-radius: 20px;
+        display: none; flex-direction: column; overflow: hidden; z-index: 2000;
         box-shadow: 0 20px 40px rgba(0,0,0,0.4);
     }
 
-    #chat-header { padding: 15px; background: rgba(255,255,255,0.05); font-weight: bold; color: var(--mbm-blue); border-bottom: 1px solid var(--glass-border); }
-    #chat-messages { flex-grow: 1; overflow-y: auto; padding: 15px; font-size: 0.9rem; display: flex; flex-direction: column; gap: 10px; scroll-behavior: smooth; }
+    #chat-header { padding: 15px; background: rgba(255,255,255,0.05); font-weight: bold; color: white; border-bottom: 1px solid var(--glass-border); }
+    #chat-messages { flex-grow: 1; overflow-y: auto; padding: 15px; font-size: 0.9rem; display: flex; flex-direction: column; gap: 10px; }
     #chat-input-area { padding: 15px; display: flex; gap: 10px; background: rgba(0,0,0,0.2); }
     #user-input { flex-grow: 1; background: transparent; border: 1px solid var(--glass-border); color: white; padding: 8px; border-radius: 8px; outline: none; }
     #send-btn { background: var(--mbm-blue); color: white; border: none; padding: 8px 15px; border-radius: 8px; cursor: pointer; }
 
-    .msg-user { align-self: flex-end; background: var(--mbm-blue); padding: 8px 12px; border-radius: 12px 12px 0 12px; max-width: 80%; word-wrap: break-word; }
-    .msg-ai { align-self: flex-start; background: rgba(255,255,255,0.1); padding: 8px 12px; border-radius: 12px 12px 12px 0; max-width: 80%; word-wrap: break-word; }
+    .msg-user { align-self: flex-end; background: var(--mbm-blue); padding: 8px 12px; border-radius: 12px 12px 0 12px; color: white; }
+    .msg-ai { align-self: flex-start; background: rgba(255,255,255,0.1); padding: 8px 12px; border-radius: 12px 12px 12px 0; color: white; }
 </style>
 
 <div id="chat-window">
     <div id="chat-header">AI Chat Support</div>
     <div id="chat-messages">
-        <div class="msg-ai">Hello! I am a chat support representative. How can we optimize your workflow today?</div>
+        <div class="msg-ai">Hello! How can I Digital Marketing Network, MicroBurstMedia, assist you today?</div>
     </div>
     <div id="chat-input-area">
-        <input type="text" id="user-input" placeholder="Ask me anything...">
-        <button id="send-btn">Send</button>
+        <input type="text" id="user-input" placeholder="Type a keyword...">
+        <button id="send-btn" onclick="handleChatSend()">Send</button>
     </div>
 </div>
 
-<div id="chat-trigger">
+<div id="chat-trigger" onclick="toggleChat()">
     <svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path></svg>
 </div>
 
 <script>
-    const trigger = document.getElementById('chat-trigger');
-    const windowEl = document.getElementById('chat-window');
-    const input = document.getElementById('user-input');
-    const sendBtn = document.getElementById('send-btn');
-    const msgBox = document.getElementById('chat-messages');
+    function toggleChat() {
+        const win = document.getElementById('chat-window');
+        win.style.display = (win.style.display === 'flex') ? 'none' : 'flex';
+    }
 
-    trigger.onclick = () => {
-        const isHidden = windowEl.style.display === 'none' || windowEl.style.display === '';
-        windowEl.style.display = isHidden ? 'flex' : 'none';
-        if (isHidden) input.focus();
-    };
-
-    async function handleSend() {
+    async function handleChatSend() {
+        const input = document.getElementById('user-input');
+        const msgBox = document.getElementById('chat-messages');
         const text = input.value.trim();
         if(!text) return;
 
-        // User message
+        // Display user message
         msgBox.innerHTML += `<div class="msg-user">${text}</div>`;
-        
-        // Thinking placeholder
-        const thinkingId = "temp-" + Date.now();
-        msgBox.innerHTML += `<div class="msg-ai" id="${thinkingId}">...Thinking...</div>`;
-        
         input.value = '';
         msgBox.scrollTop = msgBox.scrollHeight;
 
         try {
-            // Updated URL to match your current Render setup
-            const response = await fetch('https://mbmn-checkout-session.onrender.com', {
+            // Pointing to your UNIFIED Render server
+            const response = await fetch(`${MBMN_SERVER_URL}/chat`, {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({ message: text })
             });
 
             const data = await response.json();
-            const thinkingEl = document.getElementById(thinkingId);
-            
-            if(thinkingEl) {
-                // Ensure the reply actually exists before displaying
-                thinkingEl.innerText = data.reply || "It seems we're having system issues. Please contact us at +1 (954) 600-8695.";
-            }
-            
+            msgBox.innerHTML += `<div class="msg-ai">${data.reply}</div>`;
         } catch (err) {
-            const thinkingEl = document.getElementById(thinkingId);
-            if(thinkingEl) {
-                thinkingEl.style.color = "#ef4444";
-                thinkingEl.innerText = "Connection error. MBMN server may be waking up—please try again in 30 seconds.";
-            }
+            msgBox.innerHTML += `<div class="msg-ai" style="color: #f87171;">Connection busy. Try again in a moment.</div>`;
         }
-        // Final scroll update
-        setTimeout(() => { msgBox.scrollTop = msgBox.scrollHeight; }, 50);
+        msgBox.scrollTop = msgBox.scrollHeight;
     }
-
-    sendBtn.onclick = handleSend;
-    // Enhanced keyboard listener
-    input.addEventListener('keydown', (e) => {
-        if(e.key === 'Enter') handleSend();
-    });
-
 </script>
 </body>
 </html>
