@@ -511,13 +511,16 @@
         const text = input.value.trim();
         if(!text) return;
 
-        // Display user message
+        // 1. Display User Message
         msgBox.innerHTML += `<div class="msg-user">${text}</div>`;
         input.value = '';
+        
+        // 2. Display "Waiting" Message
+        const tempId = "waiting-" + Date.now();
+        msgBox.innerHTML += `<div class="msg-ai" id="${tempId}"><i>Let me see what I can find in our database, just a moment...</i></div>`;
         msgBox.scrollTop = msgBox.scrollHeight;
 
         try {
-            // Pointing to your UNIFIED Render server
             const response = await fetch(`${MBMN_SERVER_URL}/chat`, {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
@@ -525,9 +528,18 @@
             });
 
             const data = await response.json();
-            msgBox.innerHTML += `<div class="msg-ai">${data.reply}</div>`;
+            
+            // 3. Replace "Waiting" with Actual Reply
+            const waitingEl = document.getElementById(tempId);
+            if (waitingEl) {
+                waitingEl.innerHTML = data.reply;
+            }
         } catch (err) {
-            msgBox.innerHTML += `<div class="msg-ai" style="color: #f87171;">Connection busy. Try again in a moment.</div>`;
+            const waitingEl = document.getElementById(tempId);
+            if (waitingEl) {
+                waitingEl.style.color = "#f87171";
+                waitingEl.innerHTML = "Connection busy. Please try again in 20 seconds.";
+            }
         }
         msgBox.scrollTop = msgBox.scrollHeight;
     }
