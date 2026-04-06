@@ -190,8 +190,10 @@ footer {
             color: white;
             border-radius: 50%;
             display: flex;
-            align-items: ledt;
-            justify-content: left;
+            align-items: center;
+            justify-content: center;
+            line-height: 1;
+            padding: 0;
             cursor: pointer;
             z-index: 1000;
             opacity: 0;
@@ -358,6 +360,187 @@ footer {
             to { opacity: 1; transform: translateY(0); }
         }
         
+        /* --- ISOLATED SLIDER STYLES --- */
+.hz-slider-section {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center; /* Centers the whole section */
+    justify-content: center;
+    padding: 60px 0;
+}
+
+/* This is the window that stays centered */
+.hz-slider-window {
+    width: 95%;
+    max-width: 1100px;
+    overflow: hidden; /* Hides the cards that aren't centered */
+    position: relative;
+}
+
+/* This is the long track that actually moves */
+.hz-slider-track {
+    display: flex;
+    gap: 20px;
+    transition: transform 0.5s ease-out;
+}
+
+/* The Individual Card - Designed specifically for the Slider */
+.hz-card {
+    flex: 0 0 100%; /* Each card takes full width of the window */
+    display: flex;
+    flex-direction: row; /* Image Left, Content Right */
+    background: rgba(30, 41, 59, 0.7); /* Your specific glass-bg */
+    backdrop-filter: blur(15px);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 20px;
+    min-height: 400px;
+    overflow: hidden;
+}
+
+.hz-media-side {
+    flex: 1.2;
+    background: #000;
+    min-height: 300px;
+}
+
+.hz-content-side {
+    flex: 1;
+    padding: 30px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    text-align: left;
+}
+
+.hz-content-side h3 { color: #3b82f6; margin-bottom: 10px; }
+.hz-content-side p { font-size: 0.95rem; line-height: 1.5; margin-bottom: 20px; }
+
+.hz-cta {
+    background: #3b82f6;
+    color: white;
+    padding: 10px 20px;
+    border-radius: 6px;
+    text-decoration: none;
+    width: fit-content;
+}
+
+.hz-disclaimer {
+    font-size: 0.7rem;
+    color: rgba(255, 255, 255, 0.4);
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+    padding-top: 10px;
+    margin-top: 20px;
+}
+
+/* Mobile: Stack vertically */
+@media (max-width: 768px) {
+    .hz-card { flex-direction: column; }
+    .hz-slider-window { width: 90%; }
+}
+
+/* --- SLIDER CONTROLS STYLE --- */
+.hz-nav-container {
+    width: 95%;
+    max-width: 1200px;
+    display: flex;
+    justify-content: space-between;
+    position: absolute;
+    z-index: 10;
+    pointer-events: none; /* Allows clicking through the container to the buttons */
+}
+
+.hz-nav-btn {
+    pointer-events: auto;
+    background: rgba(59, 130, 246, 0.2);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    color: white;
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    cursor: pointer;
+    font-size: 1.2rem;
+    backdrop-filter: blur(5px);
+    transition: 0.3s;
+}
+
+.hz-nav-btn:hover {
+    background: #3b82f6;
+    transform: scale(1.1);
+}
+
+.hz-dots-container {
+    margin-top: 25px;
+    display: flex;
+    gap: 10px;
+}
+
+.hz-dot {
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    background: rgba(255,255,255,0.2);
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+.hz-dot.active {
+    background: #3b82f6;
+    transform: scale(1.3);
+}
+
+/* --- POSITIONING TWEAKS --- */
+
+/* Dots at the top */
+.hz-dots-container {
+    margin-bottom: 20px; /* Space between dots and card */
+    display: flex;
+    gap: 12px;
+    justify-content: center;
+}
+
+/* New row for arrows underneath */
+.hz-controls-row {
+    margin-top: 25px;
+    display: flex;
+    gap: 40px; /* Space between Prev and Next buttons */
+    justify-content: center;
+    width: 100%;
+}
+
+.hz-nav-btn {
+    width: 45px;
+    height: 45px;
+    border-radius: 4px; /* Square with slight rounding for a clean look */
+    background: rgba(59, 130, 246, 0.2);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    color: white;
+    cursor: pointer;
+    font-size: 18px; 
+    backdrop-filter: blur(5px);
+    transition: 0.3s;
+    
+    /* Perfect Centering */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    line-height: 1;
+    padding: 0;
+}
+
+.hz-nav-btn:hover {
+    background: var(--primary);
+    transform: scale(1.05);
+    box-shadow: 0 0 15px rgba(59, 130, 246, 0.4);
+}
+
+/* Ensure the media doesn't squish */
+.hz-media-side img, .hz-media-side video {
+    width: 100%;
+    height: 100%;
+    object-fit: cover; /* This ensures the fit is clean */
+}
+        
     </style>    
 </head>
 
@@ -408,10 +591,66 @@ footer {
                 <p>Got Questions? Please contact us during business hours from: <br> Monday to Friday from 9:00 AM - 6:00 PM EST <br> For details, click the chat bubble & select to speak with a specialist</p>
             </div>
         </section>
+        
+        <div class="hz-slider-section">
+    
+    <div class="hz-dots-container" id="hzDots">
+        <span class="hz-dot active" onclick="jumpToHzCard(0)"></span>
+        <span class="hz-dot" onclick="jumpToHzCard(1)"></span>
+        <span class="hz-dot" onclick="jumpToHzCard(2)"></span>
+    </div>
+
+    <div class="hz-slider-window">
+        <div class="hz-slider-track" id="hzTrack">
+            
+            <div class="hz-card">
+                <div class="hz-media-side">
+                    <img src="https://i.pinimg.com/originals/8d/62/1f/8d621f66f551b6a39072473d52280ff0.gif" alt="Automation">
+                </div>
+                <div class="hz-content-side">
+                    <h3>System Automation</h3>
+                    <p>Deploy enterprise-grade workflows that handle repetitive tasks, allowing your team to focus on high-value growth.</p>
+                    <a href="#" class="hz-cta">Learn More</a>
+                    <div class="hz-disclaimer">* Automation results depend on API connectivity and system architecture.</div>
+                </div>
+            </div>
+
+            <div class="hz-card">
+                <div class="hz-media-side">
+                    <img src="https://cdn.dribbble.com/userupload/23731317/file/original-5eb2f9967073700b38a31280cc2c32e0.gif" alt="Automation">
+                </div>
+                <div class="hz-content-side">
+                    <h3>24/7 Operations</h3>
+                    <p>Maintain network presence and service delivery around the clock with our cloud-hosted infrastructure.</p>
+                    <a href="#" class="hz-cta">View Systems</a>
+                    <div class="hz-disclaimer">* Standard uptime guarantees apply to all active network nodes.</div>
+                </div>
+            </div>
+
+            <div class="hz-card">
+                <div class="hz-media-side">
+                    <img src="https://substackcdn.com/image/fetch/$s_!dSWe!,f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2F8b102bd0-4f5a-46cb-a8be-c9392673c66e_1050x360.gif" alt="Automation">
+                </div>
+                <div class="hz-content-side">
+                    <h3>Scalable Growth</h3>
+                    <p>Expand your digital footprint without increasing manual overhead using our proprietary routing methods.</p>
+                    <a href="#" class="hz-cta">Get Started</a>
+                    <div class="hz-disclaimer">* Scaling metrics are calculated based on monthly traffic volume.</div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <div class="hz-controls-row">
+        <button class="hz-nav-btn" onclick="moveHzSlider(-1)">&#10094; Prev</button>
+        <button class="hz-nav-btn" onclick="moveHzSlider(1)">Next &#10095;</button>
+    </div>
+</div>
 
         <section class="features">
             <div class="container">
-                <h2 style="text-align: center; margin-bottom: 30px;"> If you're looking to incorporate AI into your business. <br> Hire us to assist with all of your IT headaches, <br> handling, and developments at your business expense. <br> Stop working harder, start earning smarter today! </h2>
+                <h2 style="text-align: center; margin-bottom: 30px;"> If you're looking to incorporate AI into your business. <br> Hire us to assist with all of your IT headaches, <br> system handling, and developments at your business expense. <br> Stop working harder, start earning smarter today! </h2>
             </div>
         </section>
 
@@ -562,7 +801,7 @@ footer {
             <option value="portfolio">View Our Portfolio</option>
             <option value="automation">Automation Systems</option>
             <option value="schedule">Schedule a Consultation</option>
-            <option value="ebook">Inquire AI E-Book</option>
+            <option value="ebook">Acquire AI E-Book</option>
             <option value="network">Visit Business Network</option>
             <option value="contact">Speak with a Specialist</option>
             <option value="resources">Visit Resources Center</option>
@@ -774,27 +1013,32 @@ footer {
 
         async function initRotator() {
             const container = document.getElementById('rotator-content');
-            const googleScriptUrl = 'https://script.google.com/macros/s/AKfycbxpOGMGIQhtsuk1_dESNyMHzktUc2nNVc4wqhy1luk0zljkiXOgE3vUjxWyA46gVDn9/exec';
             let newsData = [];
             let index = 0;
             let rotatorTimeout; 
             const REFRESH_INTERVAL = 30 * 60 * 1000;
 
             async function fetchNews() {
-                try {
-                    const response = await fetch(`${googleScriptUrl}?t=${Date.now()}`);
-                    let data = await response.json();
-                    newsData = data.filter(item => item.text && item.text.toLowerCase() !== 'title');
-
-                    if (newsData.length > 0 && !rotatorTimeout) {
-                        showNext();
-                    } else if (newsData.length === 0) {
-                        container.innerHTML = `<p style="color: var(--text-muted); font-size: 0.8rem;">Monitoring network for new intelligence...</p>`;
-                    }
-                } catch (e) {
-                    container.innerHTML = `<p style="color: var(--text-muted); font-size: 0.8rem;">Live feed currently updating. Please stand by.</p>`;
-                }
-            }
+    try {
+        // REPLACE THE URL BELOW WITH YOUR ACTUAL GOOGLE APPS SCRIPT WEB APP URL
+        const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbxpOGMGIQhtsuk1_dESNyMHzktUc2nNVc4wqhy1luk0zljkiXOgE3vUjxWyA46gVDn9/exec";
+        
+        const response = await fetch(SCRIPT_URL);
+        const data = await response.json();
+        
+        if (data && data.length > 0) {
+            newsData = data;
+            if (!rotatorTimeout) showNext();
+        } else {
+            document.getElementById('rotator-content').innerHTML = `
+                <div class="news-card">
+                    <p class="rotator-text">Systems Operational. Check back soon for online network updates.</p>
+                </div>`;
+        }
+    } catch (error) {
+        console.error("Error fetching news:", error);
+    }
+}
 
             function showNext() {
                 if (newsData.length === 0) return;
@@ -820,5 +1064,67 @@ footer {
         } // End of initRotator
         
     </script>
+    
+    <script>
+    let hzIndex = 0;
+    let autoPlayInterval; // Variable to store the timer
+
+    // --- CONFIGURATION ---
+    const AUTO_PLAY_ENABLED = true; 
+    const PAUSE_TIME = 5000; // Set time in milliseconds (e.g., 5000 = 5 seconds)
+    // ---------------------
+
+    function updateHzSlider() {
+        const track = document.getElementById('hzTrack');
+        const dots = document.querySelectorAll('.hz-dot');
+        
+        const percentage = hzIndex * 100;
+        track.style.transform = `translateX(-${percentage}%)`;
+        
+        dots.forEach((dot, i) => {
+            dot.classList.toggle('active', i === hzIndex);
+        });
+    }
+
+    function moveHzSlider(direction) {
+        const cards = document.querySelectorAll('.hz-card');
+        hzIndex += direction;
+        
+        if (hzIndex >= cards.length) hzIndex = 0;
+        if (hzIndex < 0) hzIndex = cards.length - 1;
+        
+        updateHzSlider();
+        
+        // Reset the timer whenever a user manually clicks, 
+        // so it doesn't "skip" immediately after they interact.
+        resetAutoPlay();
+    }
+
+    function jumpToHzCard(index) {
+        hzIndex = index;
+        updateHzSlider();
+        resetAutoPlay();
+    }
+
+    // NEW: Auto-Play Functions
+    function startAutoPlay() {
+        if (AUTO_PLAY_ENABLED) {
+            autoPlayInterval = setInterval(() => {
+                moveHzSlider(1);
+            }, PAUSE_TIME);
+        }
+    }
+
+    function resetAutoPlay() {
+        clearInterval(autoPlayInterval);
+        startAutoPlay();
+    }
+
+    window.addEventListener('load', () => {
+        updateHzSlider();
+        startAutoPlay(); // Kick off the timer when page loads
+    });
+</script>
+    
 </body>
 </html>
