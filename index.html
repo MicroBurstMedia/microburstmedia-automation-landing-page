@@ -1132,16 +1132,16 @@ document.addEventListener("DOMContentLoaded", function() {
     const rowId = params.get('row');
 
     if (rowId) {
-        // CLEAN URL: No parameters at the end of the base URL
+        // Your specific Web App URL
         const scriptUrl = "https://script.google.com/macros/s/AKfycbwauTbDyDH3ozK1ersXaBC-mCsfgmGBafuSkTctBCE89vQczx9PrQQLVN_nvjITg-7n/exec";
 
-        // This sends the signal to your Google Sheet
+        // This acts like a 'Campaign Ping'
         fetch(`${scriptUrl}?row=${rowId}`, {
-            method: 'GET',
-            mode: 'no-cors' // Critical for avoiding browser security blocks
+            method: "GET",
+            mode: "no-cors" 
         })
-        .then(() => console.log("Success: Sheet updated for row " + rowId))
-        .catch(err => console.error("Error:", err));
+        .then(() => console.log("Campaign ID " + rowId + " tracked."))
+        .catch(err => console.error("Tracking Error:", err));
     }
 });
 </script>
