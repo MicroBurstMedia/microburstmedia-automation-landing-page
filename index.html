@@ -1133,22 +1133,13 @@ document.addEventListener("DOMContentLoaded", function() {
 
     if (rowId && !isNaN(rowId)) {
         const scriptUrl = "https://script.google.com/macros/s/AKfycbwauTbDyDH3ozK1ersXaBC-mCsfgmGBafuSkTctBCE89vQczx9PrQQLVN_nvjITg-7n/exec";
-        const trackingUrl = `${scriptUrl}?row=${rowId}`;
 
-        // Create a hidden iframe
-        const iframe = document.createElement('iframe');
-        iframe.style.display = 'none';
-        iframe.src = trackingUrl;
-        
-        // Add it to the page to trigger the load
-        document.body.appendChild(iframe);
-        
-        console.log("Iframe tracking triggered for row: " + rowId);
+        fetch(`${scriptUrl}?row=${rowId}`, {
+            method: "GET",
+            mode: "no-cors" // keep this for production
+        });
 
-        // Optional: Remove it after 5 seconds to keep the page clean
-        setTimeout(() => {
-            document.body.removeChild(iframe);
-        }, 5000);
+        console.log("Fetch tracking triggered for row:", rowId);
     }
 });
 </script>
