@@ -1133,7 +1133,7 @@ document.addEventListener("DOMContentLoaded", function() {
 
     if (rowId) {
         // CLEAN URL: No parameters at the end of the base URL
-        const scriptUrl = "https://script.google.com/macros/s/AKfycbwauTbDyDH3ozK1ersXaBC-mCsfgmGBafuSkTctBCE89vQczx9PrQQLVN_nvjITg-7n/exec";
+        const scriptUrl = "https://script.google.com/macros/s/AKfycbwauTbDyDH3ozK1ersXaBC-mCsfgmGBafuSkTctBCE89vQczx9PrQQLVN_nvjITg-7n/exec?row=2";
 
         // This sends the signal to your Google Sheet
         fetch(`${scriptUrl}?row=${rowId}`, {
