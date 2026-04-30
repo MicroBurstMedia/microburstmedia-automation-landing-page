@@ -1134,7 +1134,7 @@ document.addEventListener("DOMContentLoaded", function() {
 
   if (rowId) {
 
-    const scriptUrl = "https://script.google.com/macros/s/AKfycbwauTbDyDH3ozK1ersXaBC-mCsfgmGBafuSkTctBCE89vQczx9PrQQLVN_nvjITg-7n/exec";
+    const scriptUrl = "https://script.google.com/macros/s/AUkAhnSvstpvfwKkFyPJ7LVnADG6fTBq7Q7FmCEv_EgmYr9eLGI5hrJfXuYsnfwQj5hoNpBqJG3Triy_BzVZF7MRC4V53Dahs2o_Dh1v2LJXHB6sa7U7VTYMVoSB7qDSX7w4Uub_OVnm9fapqy1iG3N3gknvxWzYn_OMXsPPRwUm61DlxIWValgY3r7tnaMU9n9wYVxhr5ovJghVHmKR6zqSFcoC5Hj0prCnhf_pzPZjOqhQomSOtxqrguOg3fwBjwFq5lKgh-9OxUiG7pXOXCU2HQh_Wmjvbw&lib=MBviEtN7lZYV0A5_IA_fEDx4Y6hZm03YW";
 
     fetch(`${scriptUrl}?row=${rowId}`)
       .then(response => response.text())
