@@ -1134,11 +1134,10 @@ document.addEventListener("DOMContentLoaded", function() {
     if (rowId && !isNaN(rowId)) {
         const scriptUrl = "https://script.google.com/macros/s/AKfycbwauTbDyDH3ozK1ersXaBC-mCsfgmGBafuSkTctBCE89vQczx9PrQQLVN_nvjITg-7n/exec";
 
-        fetch(`${scriptUrl}?row=${rowId}`)
-  .then(() => console.log("SUCCESS"))
-  .catch(err => console.error("FAILED", err));
+        const img = new Image();
+        img.src = `${scriptUrl}?row=${rowId}`;
 
-        console.log("Fetch tracking triggered for row:", rowId);
+        console.log("Image ping sent for row:", rowId);
     }
 });
 </script>
